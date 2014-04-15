@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Initializers &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Resources" href="resources.html" />
+    <link rel="prev" title="Typus User Guide" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resources.html" title="Resources"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Typus User Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="initializers">
+<h1>Initializers<a class="headerlink" href="#initializers" title="Permalink to this headline">¶</a></h1>
+<p>You can configure the admin panel using the initializer the generator created.
+You can find it at <tt class="docutils literal"><span class="pre">config/initializers/typus.rb</span></tt>.</p>
+<div class="section" id="admin-title">
+<h2>Admin Title<a class="headerlink" href="#admin-title" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">admin_title</span></tt> is what is shown on the login page and as a header of
+the admin panel. When the generator is run the application will use the folder
+name of the Rails application.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">admin_title</span> <span class="o">=</span> <span class="s2">&quot;Application Name&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="admin-sub-title">
+<h2>Admin Sub Title<a class="headerlink" href="#admin-sub-title" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">admin_sub_title</span></tt> is shown at the login page and at the admin panel
+footer.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">admin_sub_title</span> <span class="o">=</span> <span class="s2">&quot;Developed by ...&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>There are 3 authentication methods: <tt class="docutils literal"><span class="pre">none</span></tt>, <tt class="docutils literal"><span class="pre">basic</span></tt>, <tt class="docutils literal"><span class="pre">session</span></tt> and <tt class="docutils literal"><span class="pre">devise</span></tt>.</p>
+<p>By default the application uses the <tt class="docutils literal"><span class="pre">none</span></tt>. To use the <tt class="docutils literal"><span class="pre">session</span></tt> method,
+you&#8217;ll need to run the <tt class="docutils literal"><span class="pre">typus:migration</span></tt> generator as a users table is
+needed.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">authentication</span> <span class="o">=</span> <span class="ss">:none</span><span class="o">|</span><span class="ss">:http_basic</span><span class="o">|</span><span class="ss">:session</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>With the <tt class="docutils literal"><span class="pre">session</span></tt> authentication you&#8217;ll be able to use roles.</p>
+</div>
+<div class="section" id="mailer-sender">
+<h2>Mailer Sender<a class="headerlink" href="#mailer-sender" title="Permalink to this headline">¶</a></h2>
+<p>Recover password is disabled by default. To enable it you should provide an
+email address which will be shown as the sender.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">mailer_sender</span> <span class="o">=</span> <span class="s2">&quot;blackhole@core.typuscmf.com&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="master-role">
+<h2>Master Role<a class="headerlink" href="#master-role" title="Permalink to this headline">¶</a></h2>
+<p>This is the value of the master role of the application. By default we use
+the role admin as the default value.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">master_role</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-class-name">
+<h2>User Class Name<a class="headerlink" href="#user-class-name" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">user_class_name</span> <span class="o">=</span> <span class="s2">&quot;TypusUser&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-foreign-key">
+<h2>User Foreign Key<a class="headerlink" href="#user-foreign-key" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">user_foreign_key</span> <span class="o">=</span> <span class="s2">&quot;typus_user_id&quot;</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="subdomain">
+<h2>Subdomain<a class="headerlink" href="#subdomain" title="Permalink to this headline">¶</a></h2>
+<p>If you need your application to be served from a subdomain you need to set the
+<tt class="docutils literal"><span class="pre">subdomain</span></tt> setting.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">subdomain</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span> <span class="c1"># Default is nil</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Initializers</a><ul>
+<li><a class="reference internal" href="#admin-title">Admin Title</a></li>
+<li><a class="reference internal" href="#admin-sub-title">Admin Sub Title</a></li>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#mailer-sender">Mailer Sender</a></li>
+<li><a class="reference internal" href="#master-role">Master Role</a></li>
+<li><a class="reference internal" href="#user-class-name">User Class Name</a></li>
+<li><a class="reference internal" href="#user-foreign-key">User Foreign Key</a></li>
+<li><a class="reference internal" href="#subdomain">Subdomain</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Typus User Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="resources.html"
+                        title="next chapter">Resources</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/configuration/initializers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resources.html" title="Resources"
+             >next</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Typus User Guide"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

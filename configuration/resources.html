@@ -1,0 +1,555 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resources &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Resource" href="resource.html" />
+    <link rel="prev" title="Initializers" href="initializers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resource.html" title="Resource"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="initializers.html" title="Initializers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="resources">
+<h1>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h1>
+<p>All application models, including the ones on the engines/plugins, can be
+configured using the <tt class="docutils literal"><span class="pre">yaml</span></tt> files placed on <tt class="docutils literal"><span class="pre">config/typus</span></tt>. Files under this
+folder are created using the generator detecting the models localed under <tt class="docutils literal"><span class="pre">app/models</span></tt>.</p>
+<p>There are two kind of files, the <tt class="docutils literal"><span class="pre">*.yml</span></tt> and the <tt class="docutils literal"><span class="pre">*_roles.yml</span></tt>. Look at the
+generated files to see the available options.</p>
+<p>Some resources options can be configured using the initializer the generator
+created. You can find it at <tt class="docutils literal"><span class="pre">config/initializers/typus_resources.rb</span></tt>.</p>
+<div class="section" id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h2>
+<p>Define the collection of fields which you want to display on different parts
+of the site. List is for lists, form is for forms.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Photo</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name</span>
+    <span class="l-Scalar-Plain">list</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, created_at, category, status</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, body, created_at, status</span>
+    <span class="l-Scalar-Plain">csv</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, body</span>
+    <span class="l-Scalar-Plain">xml</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, created_at, status</span>
+</pre></div>
+</div>
+<div class="section" id="file-fields">
+<h3>File Fields<a class="headerlink" href="#file-fields" title="Permalink to this headline">¶</a></h3>
+<p>File upload works for <tt class="docutils literal"><span class="pre">Paperclip</span></tt> and <tt class="docutils literal"><span class="pre">Dragonfly</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Attachment</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Dragonfly</span>
+  <span class="c1">#</span>
+  <span class="c1">#     create_table :attachments do |t|</span>
+  <span class="c1">#       t.string :file_uid</span>
+  <span class="c1">#     end</span>
+  <span class="c1">#</span>
+
+  <span class="n">image_accessor</span> <span class="ss">:file</span>
+  <span class="n">validates</span> <span class="ss">:file</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+
+  <span class="c1">##</span>
+  <span class="c1"># Paperclip:</span>
+  <span class="c1">#</span>
+  <span class="c1">#     create_table :attachments do |t|</span>
+  <span class="c1">#       t.string :file_file_name</span>
+  <span class="c1">#       t.string :file_content_type</span>
+  <span class="c1">#       t.integer :file_file_size</span>
+  <span class="c1">#       t.datetime :file_updated_at</span>
+  <span class="c1">#     end</span>
+  <span class="c1">#</span>
+
+  <span class="n">has_attached_file</span> <span class="ss">:file</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>If you want to upload files to your application you only need to define the
+attached file name which in this case is <tt class="docutils literal"><span class="pre">file</span></tt>.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Photo</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">asset</span>
+    <span class="l-Scalar-Plain">list</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">asset</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">asset</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-only-fields">
+<h3>Read Only Fields<a class="headerlink" href="#read-only-fields" title="Permalink to this headline">¶</a></h3>
+<p>Use <tt class="docutils literal"><span class="pre">attr_protected</span></tt> to mark fields as read only. Rails 3.1 accepts the option
+<tt class="docutils literal"><span class="pre">:as</span></tt> to specify a role.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Photo</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="n">attr_protected</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:as</span> <span class="o">=&gt;</span> <span class="ss">:editor</span> <span class="c1"># Editor will see the attribute as read only.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="auto-generated-fields">
+<h3>Auto Generated Fields<a class="headerlink" href="#auto-generated-fields" title="Permalink to this headline">¶</a></h3>
+<p>Define <tt class="docutils literal"><span class="pre">auto</span> <span class="pre">generated</span></tt> fields.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Order</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">...</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">auto_generated</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">tracking_number</span>
+</pre></div>
+</div>
+<p>You can then initialize it from the model.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># app/models/order.rb</span>
+<span class="k">class</span> <span class="nc">Order</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+
+  <span class="k">def</span> <span class="nf">initialize_with_defaults</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+    <span class="n">initialize_without_defaults</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span> <span class="k">do</span>
+      <span class="nb">self</span><span class="o">.</span><span class="n">tracking_number</span> <span class="o">=</span> <span class="no">Random</span><span class="o">.</span><span class="n">tracking_number</span>
+      <span class="k">yield</span> <span class="nb">self</span> <span class="k">if</span> <span class="nb">block_given?</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">alias_method_chain</span> <span class="ss">:initialize</span><span class="p">,</span> <span class="ss">:defaults</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtual-attribute-fields">
+<h3>Virtual attribute fields<a class="headerlink" href="#virtual-attribute-fields" title="Permalink to this headline">¶</a></h3>
+<p>Define a <tt class="docutils literal"><span class="pre">virtual</span> <span class="pre">attributes</span></tt>. (i.e. model which has an slug attribute
+which is generated from the title)</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># app/models/post.rb</span>
+<span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+
+  <span class="n">validates</span> <span class="ss">:title</span><span class="p">,</span> <span class="ss">:presence</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+
+  <span class="k">def</span> <span class="nf">slug</span>
+    <span class="n">title</span><span class="o">.</span><span class="n">parameterize</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Add <tt class="docutils literal"><span class="pre">slug</span></tt> as field and it&#8217;ll be shown on the listings.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># config/typus/application.yml</span>
+<span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">list</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">title, slug</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using a virtual attribute you won&#8217;t be able to search, filter or order
+by that attribute.</p>
+</div>
+</div>
+</div>
+<div class="section" id="relationships">
+<h2>Relationships<a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h2>
+<p>The generator will detect which kind of relationships has the model and will
+appear on the listings.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">relationships</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">users, projects</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filters">
+<h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
+<p>To add filters to a model you need to add the following configuration option
+to the yaml file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">filters</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+<p>Example: Show status, author and created_at filters on posts.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">filters</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">status, author, created_at</span>
+</pre></div>
+</div>
+<p>Attributes with <tt class="docutils literal"><span class="pre">boolean</span></tt>, <tt class="docutils literal"><span class="pre">date</span></tt>, <tt class="docutils literal"><span class="pre">datetime</span></tt> and <tt class="docutils literal"><span class="pre">timestamp</span></tt> data types and
+associations will work by default. If you want to have custom filters there&#8217;s
+a little more of work involved.</p>
+<p>Example: Show available locales for posts.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># config/typus/posts.yml</span>
+<span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">filters</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">locale</span>
+</pre></div>
+</div>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># app/models/post.rb</span>
+<span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">locales</span>
+    <span class="ss">Typus</span><span class="p">:</span><span class="ss">:I18n</span><span class="o">.</span><span class="n">available_locales</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="order">
+<h2>Order<a class="headerlink" href="#order" title="Permalink to this headline">¶</a></h2>
+<p>If <strong>order_by</strong> is not set, the default scope will be used.</p>
+<p>Set the default display order of the items on a model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">order_by</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, -created_at</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Adding minus (-) sign before the attribute will make the order DESC.</p>
+</div>
+</div>
+<div class="section" id="searches">
+<h2>Searches<a class="headerlink" href="#searches" title="Permalink to this headline">¶</a></h2>
+<p>Define which fields will be used when performing a search on the model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">search</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">name, body</span>
+</pre></div>
+</div>
+<p>Default search performs a full-text match. For faster searches you can use the
+following operators:</p>
+<ul class="simple">
+<li>^: Matches the beginning of the field</li>
+<li>=: Matches exactly.</li>
+<li>&#64;: Performs a full-text search match. This is the default behavior.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">search</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">=name, body</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="selectors">
+<h2>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h2>
+<p>Need a selector, to select gender, size, status, the encoding status of a
+video or whatever in the model?</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Video</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">...</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">selectors</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">gender, size, status</span>
+</pre></div>
+</div>
+<p>From now on the form, if you have enabled them on the list/form you&#8217;ll see a
+selector with the options that you define in your model.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># app/models/video.rb</span>
+<span class="k">class</span> <span class="nc">Video</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="no">STATUS</span> <span class="o">=</span> <span class="sx">%w(pending encoding encoded error published)</span>
+  <span class="n">validates_inclusion_of</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:in</span> <span class="o">=&gt;</span> <span class="no">STATUS</span>
+
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">statuses</span>
+    <span class="no">STATUS</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the selector is not defined, you&#8217;ll see a <tt class="docutils literal"><span class="pre">text</span> <span class="pre">field</span></tt> instead of a
+<tt class="docutils literal"><span class="pre">select</span> <span class="pre">field</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="booleans">
+<h2>Booleans<a class="headerlink" href="#booleans" title="Permalink to this headline">¶</a></h2>
+<p>Boolean text shows <tt class="docutils literal"><span class="pre">true</span></tt> and <tt class="docutils literal"><span class="pre">false</span></tt>, but you can personalize it by
+attribute to match your application requirements.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># config/typus/application.yml</span>
+<span class="l-Scalar-Plain">TypusUser</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">email, status</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">booleans</span><span class="p-Indicator">:</span>
+        <span class="c1"># attribute: true, false</span>
+        <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">publicado, no_publicado</span>
+        <span class="l-Scalar-Plain">status</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;It&#39;s</span><span class="nv"> </span><span class="s">active&quot;</span><span class="p-Indicator">,</span> <span class="s">&quot;It&#39;s</span><span class="nv"> </span><span class="s">inactive&quot;</span><span class="p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="date-formats">
+<h2>Date Formats<a class="headerlink" href="#date-formats" title="Permalink to this headline">¶</a></h2>
+<p>Date formats allows to define the format of the datetime field.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># config/typus/application.yml</span>
+<span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">...</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">date_formats</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">published_at</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">post_short</span>
+</pre></div>
+</div>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># config/initializers/dates.rb</span>
+<span class="ss">Date</span><span class="p">:</span><span class="ss">:DATE_FORMATS</span><span class="o">[</span><span class="ss">:post_short</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;%m/%Y&#39;</span>
+<span class="ss">Time</span><span class="p">:</span><span class="ss">:DATE_FORMATS</span><span class="o">[</span><span class="ss">:post_short</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;%m/%y&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<p>Define more actions which will be shown on the requested action.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">actions</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">index</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">notify_all</span>
+    <span class="l-Scalar-Plain">edit</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">notify</span>
+</pre></div>
+</div>
+<p>Add those actions to your admin controllers.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Admin</span><span class="o">::</span><span class="no">NewslettersController</span> <span class="o">&lt;</span> <span class="no">AdminController</span>
+
+  <span class="c1"># Action to deliver emails ...</span>
+  <span class="k">def</span> <span class="nf">deliver</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="n">redirect_to</span> <span class="ss">:back</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>For feedback you can use the following flash methods.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">flash[:notice]</span></tt> to deliver feedback.</li>
+<li><tt class="docutils literal"><span class="pre">flash[:alert]</span></tt> when there&#8217;s something wrong.</li>
+</ul>
+</div>
+<div class="section" id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+<p>To group resources into an application use <tt class="docutils literal"><span class="pre">application</span></tt>.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Model</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">application</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">CMS</span>
+</pre></div>
+</div>
+<p>Models will now appear in the dashboard grouped. When you&#8217;re updating data on
+a model, you&#8217;ll see on the sidebar the models of the same group. This will
+make navigation easier between these grouped models.</p>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="end-year">
+<h3>End Year<a class="headerlink" href="#end-year" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">end_year</span> <span class="o">=</span> <span class="mi">2015</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">end_year</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">2015</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="form-rows">
+<h3>Form Rows<a class="headerlink" href="#form-rows" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">form_rows</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">form_rows</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">25</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="minute-step">
+<h3>Minute Step<a class="headerlink" href="#minute-step" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">minute_step</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">minute_step</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="per-page">
+<h3>Per Page<a class="headerlink" href="#per-page" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">per_page</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">per_page</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-year">
+<h3>Start Year<a class="headerlink" href="#start-year" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">start_year</span> <span class="o">=</span> <span class="mi">1990</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">start_year</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1990</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="counters">
+<h3>Counters<a class="headerlink" href="#counters" title="Permalink to this headline">¶</a></h3>
+<p>If you want to show resources count when listing items. Disable it if you have
+resources with many records.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">Typus</span><span class="p">:</span><span class="ss">:Resources</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">counters</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>You can also define this option by model.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">counters</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exporting-data">
+<h3>Exporting Data<a class="headerlink" href="#exporting-data" title="Permalink to this headline">¶</a></h3>
+<p><strong>Typus</strong> allows to export data in CSV, JSON and XML.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">export</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">csv, json, xml</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Resources</a><ul>
+<li><a class="reference internal" href="#fields">Fields</a><ul>
+<li><a class="reference internal" href="#file-fields">File Fields</a></li>
+<li><a class="reference internal" href="#read-only-fields">Read Only Fields</a></li>
+<li><a class="reference internal" href="#auto-generated-fields">Auto Generated Fields</a></li>
+<li><a class="reference internal" href="#virtual-attribute-fields">Virtual attribute fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relationships">Relationships</a></li>
+<li><a class="reference internal" href="#filters">Filters</a></li>
+<li><a class="reference internal" href="#order">Order</a></li>
+<li><a class="reference internal" href="#searches">Searches</a></li>
+<li><a class="reference internal" href="#selectors">Selectors</a></li>
+<li><a class="reference internal" href="#booleans">Booleans</a></li>
+<li><a class="reference internal" href="#date-formats">Date Formats</a></li>
+<li><a class="reference internal" href="#actions">Actions</a></li>
+<li><a class="reference internal" href="#applications">Applications</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#end-year">End Year</a></li>
+<li><a class="reference internal" href="#form-rows">Form Rows</a></li>
+<li><a class="reference internal" href="#minute-step">Minute Step</a></li>
+<li><a class="reference internal" href="#per-page">Per Page</a></li>
+<li><a class="reference internal" href="#start-year">Start Year</a></li>
+<li><a class="reference internal" href="#counters">Counters</a></li>
+<li><a class="reference internal" href="#exporting-data">Exporting Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="initializers.html"
+                        title="previous chapter">Initializers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="resource.html"
+                        title="next chapter">Resource</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/configuration/resources.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="resource.html" title="Resource"
+             >next</a></li>
+        <li class="right" >
+          <a href="initializers.html" title="Initializers"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

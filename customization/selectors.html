@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Selectors &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="User Interface" href="user-interface.html" />
+    <link rel="prev" title="Custom CSS and Javascript" href="custom_css_and_js.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-interface.html" title="User Interface"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="selectors">
+<h1>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h1>
+<p>Form selectors are using the instance method <tt class="docutils literal"><span class="pre">to_label</span></tt> to show instantiated
+models.</p>
+<p>Having the following model definition:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="c1"># Attributes: title, author, content</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Selectors will look like this: <tt class="docutils literal"><span class="pre">Entry#1</span></tt> (Model and Id of the item).</p>
+<p>Override the method <tt class="docutils literal"><span class="pre">to_label</span></tt> to show the information you want to:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Entry</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="c1"># Attributes: title, author, content</span>
+
+  <span class="k">def</span> <span class="nf">to_label</span>
+    <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2"> (</span><span class="si">#{</span><span class="n">author</span><span class="si">}</span><span class="s2">)&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="custom_css_and_js.html"
+                        title="previous chapter">Custom CSS and Javascript</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="user-interface.html"
+                        title="next chapter">User Interface</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/selectors.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="user-interface.html" title="User Interface"
+             >next</a></li>
+        <li class="right" >
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

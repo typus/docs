@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Devise Authentication &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)" href="export-on-heroku.html" />
+    <link rel="prev" title="Custom Authentication" href="custom-authentication.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="export-on-heroku.html" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="custom-authentication.html" title="Custom Authentication"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="devise-authentication">
+<h1>Devise Authentication<a class="headerlink" href="#devise-authentication" title="Permalink to this headline">¶</a></h1>
+<p>Add <strong>Typus</strong> and <strong>Devise</strong> to your <tt class="docutils literal"><span class="pre">Gemfile</span></tt>:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">gem</span> <span class="s2">&quot;devise&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 2.0.4&quot;</span>
+<span class="n">gem</span> <span class="s2">&quot;typus&quot;</span><span class="p">,</span> <span class="s2">&quot;~&gt; 3.1.9&quot;</span>
+</pre></div>
+</div>
+<p>Generate <strong>Devise</strong> required stuff:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate devise:install
+rails generate devise DeviseUser
+rake db:migrate
+</pre></div>
+</div>
+<p>Run the <strong>Typus</strong> generator:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate typus
+</pre></div>
+</div>
+<p>Configure the initializer:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># config/initializers/typus.rb</span>
+<span class="no">Typus</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">authentication</span> <span class="o">=</span> <span class="ss">:devise</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>There are some changes you need to do to your <tt class="docutils literal"><span class="pre">DeviseUser</span></tt>.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="hll"><span class="nb">require</span> <span class="s1">&#39;typus/orm/active_record/instance_methods&#39;</span>
+</span><span class="hll">
+</span><span class="k">class</span> <span class="nc">DeviseUser</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+  <span class="c1"># Include default devise modules. Others available are:</span>
+  <span class="c1"># :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable</span>
+  <span class="n">devise</span> <span class="ss">:database_authenticatable</span><span class="p">,</span> <span class="ss">:registerable</span><span class="p">,</span>
+         <span class="ss">:recoverable</span><span class="p">,</span> <span class="ss">:rememberable</span><span class="p">,</span> <span class="ss">:trackable</span><span class="p">,</span> <span class="ss">:validatable</span>
+
+  <span class="c1"># Setup accessible (or protected) attributes for your model</span>
+  <span class="c1"># attr_accessible :email, :password, :password_confirmation, :remember_me</span>
+  <span class="c1"># attr_accessible :email, :password, :password_confirmation, :remember_me, :as =&gt; :admin</span>
+
+  <span class="kp">include</span> <span class="ss">Typus</span><span class="p">:</span><span class="ss">:Orm</span><span class="o">::</span><span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:InstanceMethods</span>
+<span class="hll">
+</span><span class="hll">  <span class="c1"># If DeviseUser#locale is not found, we will use the default one.</span>
+</span>  <span class="k">def</span> <span class="nf">locale</span>
+    <span class="o">::</span><span class="no">I18n</span><span class="o">.</span><span class="n">locale</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">role</span>
+    <span class="no">Typus</span><span class="o">.</span><span class="n">master_role</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Finally start your application and go to <a class="reference external" href="http://localhost:3000/admin">http://localhost:3000/admin</a>, you should
+be redirected to the sign in form provided by <strong>Devise</strong>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="custom-authentication.html"
+                        title="previous chapter">Custom Authentication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="export-on-heroku.html"
+                        title="next chapter">Using Typus&#8217; export features on Heroku (fixes the 0 byte export issue)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/recipes/devise-authentication.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="export-on-heroku.html" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)"
+             >next</a></li>
+        <li class="right" >
+          <a href="custom-authentication.html" title="Custom Authentication"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

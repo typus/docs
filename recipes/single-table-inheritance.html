@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Single Table Inheritance &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Usage" href="../usage.html" />
+    <link rel="prev" title="Adding a Rich Text Editor" href="rich-text-editor.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../usage.html" title="Usage"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="rich-text-editor.html" title="Adding a Rich Text Editor"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="single-table-inheritance">
+<h1>Single Table Inheritance<a class="headerlink" href="#single-table-inheritance" title="Permalink to this headline">¶</a></h1>
+<p>Single Table Inheritance in <strong>Typus</strong> is relatively simple. For each model you
+have inheriting from a base table you need to have an entry  in the
+<tt class="docutils literal"><span class="pre">application.yml</span></tt> file.</p>
+<p>Because all models carry the same attributes its possible to create an
+anchored node <tt class="docutils literal"><span class="pre">(&amp;NAME)</span></tt> in the YAML file and then merge that into the inheriting
+nodes with the hash merges <tt class="docutils literal"><span class="pre">(&lt;&lt;)</span></tt> and node reference <tt class="docutils literal"><span class="pre">(*NAME)</span></tt>, as per the
+following example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Property</span><span class="p-Indicator">:</span> <span class="nl">&amp;PROP_BASE</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">list</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">address, suburb, ...(chopped)... is_active, visits, is_featured, agency, user</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">street_number, ...(chopped)... is_under_offer</span>
+    <span class="l-Scalar-Plain">show</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">id, street_number, ...(chopped)... agency, user</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">selectors</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">property_type, type</span>
+  <span class="l-Scalar-Plain">relationships</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">agency, user</span>
+  <span class="l-Scalar-Plain">application</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Property Guide</span>
+
+<span class="l-Scalar-Plain">SaleProperty</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">&lt;&lt;</span><span class="p-Indicator">:</span> <span class="nv">*PROP_BASE</span>
+
+<span class="l-Scalar-Plain">RentalProperty</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">&lt;&lt;</span><span class="p-Indicator">:</span> <span class="nv">*PROP_BASE</span>
+</pre></div>
+</div>
+<p>This will setup the parameters which typus will look for when making the
+resources available. In order to make the resources accessible you will need
+to add the following entries into the <tt class="docutils literal"><span class="pre">application_roles.yml</span></tt>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span>
+  <span class="c1"># Property not listed which means that it isn&#39;t shown.</span>
+  <span class="l-Scalar-Plain">SaleProperty</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+  <span class="l-Scalar-Plain">RentalProperty</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+  <span class="l-Scalar-Plain">HolidayRentalProperty</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+  <span class="l-Scalar-Plain">ShareRentalProperty</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+</pre></div>
+</div>
+<p>In addition to this the controller class files also need to be created in the
+<tt class="docutils literal"><span class="pre">app/controllers/admin</span></tt> directory (e.g. <tt class="docutils literal"><span class="pre">sale_property_controller.rb</span></tt>, which
+is class <tt class="docutils literal"><span class="pre">class</span> <span class="pre">Admin::SalePropertiesController</span> <span class="pre">&lt;</span> <span class="pre">Admin::ResourcesController</span></tt>)</p>
+<p>Once this is done, restart your Rails application and visit the admin route -
+the new STI tables should now be available.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Written by <a class="reference external" href="http://amasses.net/.">Matthew Savage</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rich-text-editor.html"
+                        title="previous chapter">Adding a Rich Text Editor</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../usage.html"
+                        title="next chapter">Usage</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/recipes/single-table-inheritance.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../usage.html" title="Usage"
+             >next</a></li>
+        <li class="right" >
+          <a href="rich-text-editor.html" title="Adding a Rich Text Editor"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

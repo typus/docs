@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resource &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Roles" href="roles.html" />
+    <link rel="prev" title="Resources" href="resources.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="roles.html" title="Roles"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="resources.html" title="Resources"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="resource">
+<h1>Resource<a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h1>
+<p>Sometimes your need to manage some services, view log files or do any other
+task which is not related to a model.</p>
+<p>Let&#8217;s say for example you want to see the <cite>memcached</cite> status of your application
+and also want to be able to flush all the keys.</p>
+<p>First of all we will create a controller:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Admin</span><span class="o">::</span><span class="no">MemcachedController</span> <span class="o">&lt;</span> <span class="ss">Admin</span><span class="p">:</span><span class="ss">:ResourceController</span>
+
+  <span class="c1"># Here we return the status of the service.</span>
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="c1"># Here we flush all the keys and redirect to the index.</span>
+  <span class="k">def</span> <span class="nf">flush_all</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="n">redirect_to</span> <span class="ss">:back</span><span class="p">,</span> <span class="ss">:notice</span> <span class="o">=&gt;</span> <span class="ss">Typus</span><span class="p">:</span><span class="ss">:I18n</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="s2">&quot;Memcached has been flushed.&quot;</span><span class="p">)</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>We will need some views for the new controller. We will create them on the
+application: <cite>app/views/admin/memcached/index.html.erb</cite></p>
+<p><strong>Remember:</strong> In order to have access to the &#8220;tableless resources&#8221; you need to
+add them to the roles.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="resources.html"
+                        title="previous chapter">Resources</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="roles.html"
+                        title="next chapter">Roles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/configuration/resource.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="roles.html" title="Roles"
+             >next</a></li>
+        <li class="right" >
+          <a href="resources.html" title="Resources"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

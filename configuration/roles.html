@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Roles &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Selectors" href="../customization/selectors.html" />
+    <link rel="prev" title="Resource" href="resource.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../customization/selectors.html" title="Selectors"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="resource.html" title="Resource"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="roles">
+<h1>Roles<a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h1>
+<p><strong>Typus</strong> roles are stored on <tt class="docutils literal"><span class="pre">yaml</span></tt> files.</p>
+<p>On the <tt class="docutils literal"><span class="pre">config/typus</span></tt> folder you&#8217;ll find <tt class="docutils literal"><span class="pre">yaml</span></tt> files which ending
+with <tt class="docutils literal"><span class="pre">_roles.yml</span></tt>, there is where the setup is done.</p>
+<div class="section" id="anatomy-of-a-role">
+<h2>Anatomy of a Role<a class="headerlink" href="#anatomy-of-a-role" title="Permalink to this headline">¶</a></h2>
+<p>You can add as many roles as you want and the access control allows you to
+give access to users from a role to the <tt class="docutils literal"><span class="pre">CRUD</span></tt> methods of a model and to
+custom actions you define per model.</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="c1"># Role</span>
+<span class="ss">admin</span><span class="p">:</span>
+  <span class="c1"># Model which has access to all actions</span>
+  <span class="ss">Category</span><span class="p">:</span> <span class="n">all</span>
+  <span class="c1"># Model which has acces to default methods.</span>
+  <span class="ss">Post</span><span class="p">:</span> <span class="n">create</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">delete</span>
+  <span class="c1"># Model can&#39;t delete but can deliver.</span>
+  <span class="ss">Newsletter</span><span class="p">:</span> <span class="n">create</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">deliver</span>
+  <span class="c1"># Resource (which is tableless)</span>
+  <span class="ss">Redis</span><span class="p">:</span> <span class="n">all</span>
+</pre></div>
+</div>
+<p>As an example for a real application:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="ss">admin</span><span class="p">:</span>
+  <span class="ss">AdminUser</span><span class="p">:</span> <span class="n">all</span>
+  <span class="ss">Category</span><span class="p">:</span> <span class="n">all</span>
+  <span class="ss">Post</span><span class="p">:</span> <span class="n">all</span>
+  <span class="ss">Redis</span><span class="p">:</span> <span class="n">all</span>
+
+<span class="ss">editor</span><span class="p">:</span>
+  <span class="ss">Category</span><span class="p">:</span> <span class="n">create</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">update</span>
+  <span class="ss">Post</span><span class="p">:</span> <span class="n">create</span><span class="p">,</span> <span class="n">read</span><span class="p">,</span> <span class="n">update</span>
+  <span class="ss">Redis</span><span class="p">:</span> <span class="n">index</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Roles</a><ul>
+<li><a class="reference internal" href="#anatomy-of-a-role">Anatomy of a Role</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="resource.html"
+                        title="previous chapter">Resource</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../customization/selectors.html"
+                        title="next chapter">Selectors</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/configuration/roles.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../customization/selectors.html" title="Selectors"
+             >next</a></li>
+        <li class="right" >
+          <a href="resource.html" title="Resource"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

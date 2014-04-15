@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using Typus’ export features on Heroku (fixes the 0 byte export issue) &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Adding a Rich Text Editor" href="rich-text-editor.html" />
+    <link rel="prev" title="Devise Authentication" href="devise-authentication.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rich-text-editor.html" title="Adding a Rich Text Editor"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="devise-authentication.html" title="Devise Authentication"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-typus-export-features-on-heroku-fixes-the-0-byte-export-issue">
+<h1>Using Typus&#8217; export features on Heroku (fixes the 0 byte export issue)<a class="headerlink" href="#using-typus-export-features-on-heroku-fixes-the-0-byte-export-issue" title="Permalink to this headline">¶</a></h1>
+<p>This pertains to any environment where the web server is a separate process
+from the one that runs the Ruby/Rails application, such as Heroku. The primary
+symptom would be that all exports result in 0 byte files in production, though
+they work as expected in development.</p>
+<p>In <tt class="docutils literal"><span class="pre">config/environments/production.rb</span></tt>, comment out the line that reads:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">config</span><span class="o">.</span><span class="n">action_dispatch</span><span class="o">.</span><span class="n">x_sendfile_header</span> <span class="o">=</span> <span class="s2">&quot;X-Sendfile&quot;</span>
+</pre></div>
+</div>
+<p>Then commit your change and push to Heroku. That&#8217;s it.</p>
+<p>See <a class="reference external" href="http://groups.google.com/group/heroku/msg/a6c50309e924dbb4">this thread on the Heroku mailing list</a> for background info.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="devise-authentication.html"
+                        title="previous chapter">Devise Authentication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rich-text-editor.html"
+                        title="next chapter">Adding a Rich Text Editor</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/recipes/export-on-heroku.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="rich-text-editor.html" title="Adding a Rich Text Editor"
+             >next</a></li>
+        <li class="right" >
+          <a href="devise-authentication.html" title="Devise Authentication"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

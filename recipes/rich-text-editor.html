@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Adding a Rich Text Editor &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Single Table Inheritance" href="single-table-inheritance.html" />
+    <link rel="prev" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)" href="export-on-heroku.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="single-table-inheritance.html" title="Single Table Inheritance"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="export-on-heroku.html" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="adding-a-rich-text-editor">
+<h1>Adding a Rich Text Editor<a class="headerlink" href="#adding-a-rich-text-editor" title="Permalink to this headline">¶</a></h1>
+<p>Include the <tt class="docutils literal"><span class="pre">rails-ckeditor</span></tt> gem in your <tt class="docutils literal"><span class="pre">Gemfile</span></tt>:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">gem</span> <span class="s2">&quot;rails-ckeditor&quot;</span>
+</pre></div>
+</div>
+<p>Once added update your bundle:</p>
+<div class="highlight-bash"><div class="highlight"><pre>bundle install
+</pre></div>
+</div>
+<p>On you application configuration files (<cite>config/typus</cite>) you can now enable this
+new template where needed. Eg.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">title</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">title, content</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">templates</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">content</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">text_with_ckeditor</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">CKEditor is only available for Typus 3.2 or higher.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="export-on-heroku.html"
+                        title="previous chapter">Using Typus&#8217; export features on Heroku (fixes the 0 byte export issue)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="single-table-inheritance.html"
+                        title="next chapter">Single Table Inheritance</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/recipes/rich-text-editor.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="single-table-inheritance.html" title="Single Table Inheritance"
+             >next</a></li>
+        <li class="right" >
+          <a href="export-on-heroku.html" title="Using Typus’ export features on Heroku (fixes the 0 byte export issue)"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

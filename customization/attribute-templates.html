@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Attribute Templates &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Custom CSS and Javascript" href="custom_css_and_js.html" />
+    <link rel="prev" title="Custom CSS and Javascript" href="custom_css_and_js.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="attribute-templates">
+<h1>Attribute Templates<a class="headerlink" href="#attribute-templates" title="Permalink to this headline">¶</a></h1>
+<p>It is possible to change the presentation for an attribute within the form.
+In the example below the <tt class="docutils literal"><span class="pre">published_at</span></tt> attribute is datetime attribute
+and will use the <tt class="docutils literal"><span class="pre">_datetime.html.erb</span></tt> template located on the templates
+folder <tt class="docutils literal"><span class="pre">app/views/admin/templates</span></tt>.</p>
+<div class="highlight-erb"><div class="highlight"><pre><span class="x"># app/views/admin/templates/_datetime.html.erb</span>
+<span class="x">&lt;li id=&quot;</span><span class="cp">&lt;%=</span> <span class="n">attribute_id</span> <span class="cp">%&gt;</span><span class="x">&quot;&gt;</span>
+<span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">form</span><span class="o">.</span><span class="n">label</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">label_text</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">  </span><span class="cp">&lt;%=</span> <span class="n">form</span><span class="o">.</span><span class="n">calendar_date_select</span> <span class="n">attribute</span> <span class="cp">%&gt;</span><span class="x"></span>
+<span class="x">&lt;/li&gt;</span>
+</pre></div>
+</div>
+<p>You can also create your own template and define which attributes will use it.
+Let&#8217;s say for example you define a <tt class="docutils literal"><span class="pre">_rich_text_with_fcke.html.erb</span></tt> template
+on your templates folder. You can enable the usage of that template like in the
+following example:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Entry</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">default</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">title</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">body</span>
+    <span class="l-Scalar-Plain">options</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">templates</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">body</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">rich_text_with_fcke</span>
+</pre></div>
+</div>
+<p>I recommend using <a class="reference external" href="https://github.com/fesplugas/typus/tree/master/app/views/admin/templates">Typus Templates</a> as an starting point create you own.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="custom_css_and_js.html"
+                        title="previous chapter">Custom CSS and Javascript</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="custom_css_and_js.html"
+                        title="next chapter">Custom CSS and Javascript</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/customization/attribute-templates.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             >next</a></li>
+        <li class="right" >
+          <a href="custom_css_and_js.html" title="Custom CSS and Javascript"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Custom Actions &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="../index.html" />
+    <link rel="next" title="Custom Authentication" href="custom-authentication.html" />
+    <link rel="prev" title="Configuration Files" href="configuration-files.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="custom-authentication.html" title="Custom Authentication"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="configuration-files.html" title="Configuration Files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="custom-actions">
+<h1>Custom Actions<a class="headerlink" href="#custom-actions" title="Permalink to this headline">¶</a></h1>
+<p>You can override and extend Admin::ResourcesController with your methods.
+Actions are defined in <tt class="docutils literal"><span class="pre">config/typus/application.yml</span></tt>:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">...</span>
+  <span class="l-Scalar-Plain">actions</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">index</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">custom_action</span>
+    <span class="l-Scalar-Plain">edit</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">custom_action_for_an_item</span>
+</pre></div>
+</div>
+<p>Remember to define permissions on <tt class="docutils literal"><span class="pre">config/typus/application_roles.yml</span></tt> to
+have access to the new actions.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">all</span>
+
+<span class="l-Scalar-Plain">editor</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">Post</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">create, read, update, custom_action_for_an_item</span>
+</pre></div>
+</div>
+<p>Your controller will look like this ...</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Admin</span><span class="o">::</span><span class="no">PostsController</span> <span class="o">&lt;</span> <span class="ss">Admin</span><span class="p">:</span><span class="ss">:ResourcesController</span>
+
+  <span class="k">def</span> <span class="nf">custom_action</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">custom_action_for_an_item</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="configuration-files.html"
+                        title="previous chapter">Configuration Files</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="custom-authentication.html"
+                        title="next chapter">Custom Authentication</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/recipes/custom-actions.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="custom-authentication.html" title="Custom Authentication"
+             >next</a></li>
+        <li class="right" >
+          <a href="configuration-files.html" title="Configuration Files"
+             >previous</a> |</li>
+        <li><a href="../index.html">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Typus User Guide &mdash; Typus 4.0.0.beta documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '4.0.0.beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Typus 4.0.0.beta documentation" href="#" />
+    <link rel="next" title="Initializers" href="configuration/initializers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="configuration/initializers.html" title="Initializers"
+             accesskey="N">next</a></li>
+        <li><a href="#">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="typus-user-guide">
+<h1>Typus User Guide<a class="headerlink" href="#typus-user-guide" title="Permalink to this headline">¶</a></h1>
+<p><strong>Typus</strong> is a control panel for <a class="reference external" href="http://rubyonrails.org/">Rails</a> applications to allow
+trusted users edit structured content.</p>
+<p>It&#8217;s not a CMS with a full working system but it provides a part of the system:
+authentication, permissions and basic look and feel for your websites control
+panel. So using <a class="reference external" href="http://rubyonrails.org/">Rails</a> with <strong>Typus</strong> lets you concentrate on your
+application instead of the bits to manage the system.</p>
+<p><strong>Typus</strong> is the &#8220;old latin&#8221; word for <strong>type</strong> which stands for:</p>
+<blockquote>
+<div>A category of people or things having common characteristics.</div></blockquote>
+<div class="section" id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Built-in Authentication and Access Control Lists.</li>
+<li>CRUD and custom actions for your models on a clean interface.</li>
+<li>Internationalized interface.</li>
+<li>Internationalized interface (<a class="reference external" href="https://github.com/fesplugas/typus/tree/master/config/locales">See available translations</a>)</li>
+<li>Customizable and extensible templates.</li>
+<li>Integrated <a class="reference external" href="http://rubygems.org/gems/paperclip">paperclip</a> and <a class="reference external" href="http://rubygems.org/gems/dragonfly">dragonfly</a> attachments viewer.</li>
+<li>Supports Rails 4.0 and 3.2.</li>
+<li>Tested with <strong>SQLite3</strong>, <strong>MySQL</strong> and <strong>PostgreSQL</strong>.</li>
+<li><strong>MIT License</strong>, the same as <a class="reference external" href="http://rubyonrails.org/">Rails</a>.</li>
+</ul>
+</div>
+<div class="section" id="support">
+<h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
+<p>You can directly participate in the support and development of <strong>Typus</strong>,
+including new features, by hiring our team to work on your project. We offer
+customization services for modules and extensions for a fee.</p>
+<p>Send your inquiries to <a class="reference external" href="mailto:contact&#37;&#52;&#48;typuscmf&#46;com">contact<span>&#64;</span>typuscmf<span>&#46;</span>com</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Before installing make sure your application does not have any controller
+under <tt class="docutils literal"><span class="pre">controllers/admin</span></tt> as all <strong>Typus</strong> controllers will be generated
+there.</p>
+<p>To install <strong>Typus</strong>, edit the application <tt class="docutils literal"><span class="pre">Gemfile</span></tt> and add:</p>
+<div class="highlight-ruby"><div class="highlight"><pre><span class="n">gem</span> <span class="s1">&#39;typus&#39;</span>
+
+<span class="c1"># Bundle edge Typus instead:</span>
+<span class="c1"># gem &#39;typus&#39;, :git =&gt; &#39;https://github.com/fesplugas/typus.git&#39;</span>
+</pre></div>
+</div>
+<p>Install the <strong>RubyGem</strong> using <tt class="docutils literal"><span class="pre">bundler</span></tt>:</p>
+<div class="highlight-bash"><div class="highlight"><pre>bundle install
+</pre></div>
+</div>
+<p><strong>Typus</strong> expects to have models to manage, so run the generator in order to
+generate the required configuration files:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate typus
+</pre></div>
+</div>
+<p>Start the application server, go to <a class="reference external" href="http://0.0.0.0:3000/admin">http://0.0.0.0:3000/admin</a> and follow the
+instructions.</p>
+<p>By default <strong>Typus</strong> will not enable any authentication mechanism. If you want
+to add <tt class="docutils literal"><span class="pre">session</span></tt> authentication you need to run a generator and migrate your
+application database:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate typus:migration
+rake db:migrate
+</pre></div>
+</div>
+<p>This generator creates a new model, <tt class="docutils literal"><span class="pre">AdminUser</span></tt> and adds some settings which
+will be stored under <tt class="docutils literal"><span class="pre">config/typus</span></tt> folder. You can see some options of this
+generator running the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate typus:migration -h
+</pre></div>
+</div>
+<p>If you want to customize views you can copy default views to your application:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rails generate typus:views
+</pre></div>
+</div>
+<p>To see a list of <strong>Typus</strong> related tasks run:</p>
+<div class="highlight-bash"><div class="highlight"><pre>rake -T typus
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration/initializers.html">Initializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration/resources.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration/resource.html">Resource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration/roles.html">Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/custom_css_and_js.html">Custom CSS and Javascript</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="customization">
+<h2>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="customization/attribute-templates.html">Attribute Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/custom_css_and_js.html">Custom CSS and Javascript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization/user-interface.html">User Interface</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="recipes">
+<h2>Recipes<a class="headerlink" href="#recipes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="recipes/configuration-files.html">Configuration Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/custom-actions.html">Custom Actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/custom-authentication.html">Custom Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/devise-authentication.html">Devise Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/export-on-heroku.html">Using Typus&#8217; export features on Heroku (fixes the 0 byte export issue)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/rich-text-editor.html">Adding a Rich Text Editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recipes/single-table-inheritance.html">Single Table Inheritance</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="misc">
+<h2>Misc<a class="headerlink" href="#misc" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade.html">Upgrade</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h2>
+<p>All of our hard work and help/support is free. We do have expenses to pay for
+this project and your donations do allow us to spend more time building and
+supporting the project.</p>
+<p>Some interesting ways to contribute to the project:</p>
+<ul class="simple">
+<li><strong>Fork the project</strong> - Fork the project on <a class="reference external" href="https://github.com/fesplugas/typus/">GitHub</a> and make it better.</li>
+<li><strong>Tell everybody about Typus</strong> - Let us know and we&#8217;ll link back to you as well.</li>
+<li><strong>Hire us</strong> to work on your next project - we build websites large and small.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="credits">
+<h1>Credits<a class="headerlink" href="#credits" title="Permalink to this headline">¶</a></h1>
+<p>Somehow involved in the project:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.rubyist.net/~matz">Yukihiro &#8220;matz&#8221; Matsumoto</a> creator of <a class="reference external" href="http://ruby-lang.org/">Ruby</a>, in my opinion, the most
+beautiful programming language.</li>
+<li><a class="reference external" href="http://loudthinking.com/">David Heinemeier Hansson</a> for creating <a class="reference external" href="http://rubyonrails.org/">Rails</a>.</li>
+<li><a class="reference external" href="http://www.djangoproject.com/">Django Admin</a> who inspired part of the  development, specially templates
+rendering and user interface.</li>
+<li>Our <a class="reference external" href="http://github.com/fesplugas/typus/contributors">Contributors</a>.</li>
+</ul>
+</div>
+<div class="section" id="mit-license">
+<h1>MIT License<a class="headerlink" href="#mit-license" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-none"><div class="highlight"><pre>Copyright (c) 2007-2013 Francesc Esplugas Marti
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Typus User Guide</a><ul>
+<li><a class="reference internal" href="#key-features">Key Features</a></li>
+<li><a class="reference internal" href="#support">Support</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+<li><a class="reference internal" href="#recipes">Recipes</a></li>
+<li><a class="reference internal" href="#misc">Misc</a></li>
+<li><a class="reference internal" href="#contribute">Contribute</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#credits">Credits</a></li>
+<li><a class="reference internal" href="#mit-license">MIT License</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="configuration/initializers.html"
+                        title="next chapter">Initializers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="configuration/initializers.html" title="Initializers"
+             >next</a></li>
+        <li><a href="#">Typus 4.0.0.beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Francesc Esplugas.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
